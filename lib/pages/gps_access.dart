@@ -29,7 +29,6 @@ class _GpsAccessPageState extends State<GpsAccessPage> {
               onPressed: () async {
                 // TODO: Verificar permisos
                 final status = await Permission.location.request();
-                print('');
                 this.gpsAccess(status);
               })
         ],
