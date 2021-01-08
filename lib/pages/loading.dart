@@ -1,7 +1,5 @@
-import 'package:Flutter_Maps/common/constants.dart';
 import 'package:Flutter_Maps/helpers/helpers.dart';
 import 'package:Flutter_Maps/pages/gps_access.dart';
-import 'package:Flutter_Maps/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -28,6 +26,7 @@ class LoadingPage extends StatelessWidget {
     // TODO: Comprobar los persmisos de gps
     // TODO: GPS Activo
     await Future.delayed(Duration(milliseconds: 1000));
+    print('');
       Navigator.pushReplacement(context, navigationFadeIn(context, GpsAccessPage()));
       // Navigator.pushReplacement(context, navigationFadeIn(context, HomePage()));
   }
