@@ -1,5 +1,6 @@
 import 'package:Flutter_Maps/common/constants.dart';
 import 'package:Flutter_Maps/helpers/helpers.dart';
+import 'package:Flutter_Maps/pages/gps_access.dart';
 import 'package:Flutter_Maps/pages/home.dart';
 import 'package:flutter/material.dart';
 
@@ -26,9 +27,8 @@ class LoadingPage extends StatelessWidget {
   Future checkGPSAndLocationsPermission(BuildContext context) async {
     // TODO: Comprobar los persmisos de gps
     // TODO: GPS Activo
-    Future.delayed(Duration(milliseconds: 1000), () {
-      Navigator.pushReplacement(context, navigationFadeIn(context, HomePage()));
-      // Navigator.pushReplacementNamed(context, Constants.homePageRouteName);
-    });
+    await Future.delayed(Duration(milliseconds: 1000));
+      Navigator.pushReplacement(context, navigationFadeIn(context, GpsAccessPage()));
+      // Navigator.pushReplacement(context, navigationFadeIn(context, HomePage()));
   }
 }
