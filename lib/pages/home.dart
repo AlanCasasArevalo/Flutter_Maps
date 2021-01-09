@@ -1,6 +1,7 @@
 import 'package:Flutter_Maps/bloc/my_current_location/my_current_location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,7 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     context.read<MyCurrentLocationBloc>().followInitialize();
@@ -23,10 +23,31 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final position = Position(
+        latitude:
+            context.watch<MyCurrentLocationBloc>().state.location.latitude,
+        longitude:
+            context.watch<MyCurrentLocationBloc>().state.location.longitude);
+
     return Scaffold(
-        body: Center(
-            child: Container(child: Text('Home Page'),),
-        )
+      body: BlocBuilder<MyCurrentLocationBloc, MyCurrentLocationState>(
+        builder: (BuildContext context, state) {
+          return _mapBuilder(state);
+        },
+      ),
     );
+  }
+
+  Widget _mapBuilder(MyCurrentLocationState state) {
+    return state.isLocationAvailable
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Localizacion Latitud => ${state.location.latitude}'),
+              Text('Localizacion Longitud => ${state.location.longitude}'),
+            ],
+          )
+        : Center(child: Text('No hay localizacion aun........'));
   }
 }

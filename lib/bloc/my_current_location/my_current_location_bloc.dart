@@ -24,7 +24,8 @@ class MyCurrentLocationBloc
       desiredAccuracy: LocationAccuracy.high,
       intervalDuration: Duration(seconds: 10),
     ).listen((Position position) {
-      print(position);
+      final newLocation = new LatLng(position.latitude, position.longitude);
+      add(OnLocationChange(newLocation));
     });
   }
 
@@ -33,8 +34,12 @@ class MyCurrentLocationBloc
   }
 
   @override
-  Stream<MyCurrentLocationState> mapEventToState(
-      MyCurrentLocationEvent event) async* {
-    throw UnimplementedError();
+  Stream<MyCurrentLocationState> mapEventToState(MyCurrentLocationEvent event) async* {
+    if (event is OnLocationChange) {
+      yield state.copyWith(
+        isLocationAvailable: true,
+        location: event.location
+      );
+    }
   }
 }

@@ -57,7 +57,6 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
   }
 
   Future checkGPSAndLocationsPermission(BuildContext context) async {
-
     // Si el permiso y el gps estan activados
     final gpsPermission = await Permission.location.isGranted;
     final locationActiveGPS = await Geolocator.isLocationServiceEnabled();
