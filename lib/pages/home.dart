@@ -1,6 +1,7 @@
 import 'package:Flutter_Maps/bloc/my_current_location/my_current_location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -33,15 +34,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _mapBuilder(MyCurrentLocationState state) {
-    return state.isLocationAvailable
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('Localizacion Latitud => ${state.location.latitude}'),
-              Text('Localizacion Longitud => ${state.location.longitude}'),
-            ],
-          )
-        : Center(child: Text('No hay localizacion aun........'));
+
+    if (state.isLocationAvailable == false) return Center(child: Text('No hay localizacion aun........'));
+    CameraPosition initialCameraPosition = CameraPosition (
+      target: state.location,
+      bearing: 2,
+      tilt: 2,
+      zoom: 14
+    );
+    return GoogleMap(
+      initialCameraPosition: initialCameraPosition,
+      mapType: MapType.normal,
+      myLocationEnabled: true,
+    );
   }
 }
