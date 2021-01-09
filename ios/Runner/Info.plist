@@ -29,7 +29,11 @@
 	<key>NSLocationUsageDescription</key>
 	<string>Viejos dispositivos necesitan tu localizacion.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Necesitamos tu localizacion para poder usar el mapa</string>
+	<string>Necesito saber dónde estas</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

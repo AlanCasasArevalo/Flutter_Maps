@@ -1,7 +1,6 @@
 import 'package:Flutter_Maps/bloc/my_current_location/my_current_location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,11 +22,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final position = Position(
-        latitude:
-            context.watch<MyCurrentLocationBloc>().state.location.latitude,
-        longitude:
-            context.watch<MyCurrentLocationBloc>().state.location.longitude);
 
     return Scaffold(
       body: BlocBuilder<MyCurrentLocationBloc, MyCurrentLocationState>(

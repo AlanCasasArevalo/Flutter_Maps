@@ -1,6 +1,5 @@
 import 'package:Flutter_Maps/common/constants.dart';
 import 'package:Flutter_Maps/helpers/helpers.dart';
-import 'package:Flutter_Maps/pages/gps_access.dart';
 import 'package:Flutter_Maps/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';

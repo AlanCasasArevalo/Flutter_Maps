@@ -9,6 +9,8 @@ class GpsAccessPage extends StatefulWidget {
 
 class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserver {
 
+  bool isFinishPreviousNavigation = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -48,18 +50,20 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
               elevation: 2,
               splashColor: Colors.transparent,
               onPressed: () async {
+                isFinishPreviousNavigation = true;
                 final status = await Permission.location.request();
-                this.gpsAccess(status);
+                await this.gpsAccess(status);
+                isFinishPreviousNavigation = false;
               })
         ],
       ),
     ));
   }
 
-  void gpsAccess(PermissionStatus status) {
+  Future gpsAccess(PermissionStatus status) async {
     switch (status) {
       case PermissionStatus.granted:
-        Navigator.pushReplacementNamed(context, Constants.homePageRouteName);
+        await Navigator.pushReplacementNamed(context, Constants.loadingPageRouteName);
         break;
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
