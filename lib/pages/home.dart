@@ -41,9 +41,11 @@ class _HomePageState extends State<HomePage> {
 
     CameraPosition initialCameraPosition = CameraPosition (
       target: state.location,
-      bearing: 2,
-      tilt: 2,
-      zoom: 14
+      bearing: 0,
+      // Inclinacion del mapa
+      tilt: 0,
+      // Cuanto menor sea el zoom mas zona se ve del mapa
+      zoom: 17
     );
     return GoogleMap(
       initialCameraPosition: initialCameraPosition,
