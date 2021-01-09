@@ -13,8 +13,8 @@ class MyCurrentLocationBloc
   MyCurrentLocationBloc() : super(MyCurrentLocationState());
   StreamSubscription<Position> _positionSubscription;
 
-  void followInitialize() {
-    Geolocator.isLocationServiceEnabled();
+  void followInitialize() async {
+    final locationActiveGPS = await Geolocator.isLocationServiceEnabled();
 
     // Esta escuchando siempre la posicion del usuario
     _positionSubscription = Geolocator.getPositionStream(

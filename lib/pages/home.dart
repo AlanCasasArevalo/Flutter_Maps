@@ -1,3 +1,4 @@
+import 'package:Flutter_Maps/bloc/map/map_bloc.dart';
 import 'package:Flutter_Maps/bloc/my_current_location/my_current_location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,8 +35,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _mapBuilder(MyCurrentLocationState state) {
-
     if (state.isLocationAvailable == false) return Center(child: Text('No hay localizacion aun........'));
+
+    final _mapBloc = BlocProvider.of<MapBloc>(context);
+
     CameraPosition initialCameraPosition = CameraPosition (
       target: state.location,
       bearing: 2,
@@ -46,6 +49,9 @@ class _HomePageState extends State<HomePage> {
       initialCameraPosition: initialCameraPosition,
       mapType: MapType.normal,
       myLocationEnabled: true,
+      myLocationButtonEnabled: false,
+      zoomControlsEnabled: false,
+      onMapCreated: _mapBloc.mapInitialize,
     );
   }
 }
