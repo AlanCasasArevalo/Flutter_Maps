@@ -9,6 +9,7 @@ class GpsAccessPage extends StatefulWidget {
 
 class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserver {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isFinishPreviousNavigation = false;
 
   @override
@@ -34,6 +35,7 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

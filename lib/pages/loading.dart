@@ -11,7 +11,7 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
-  final globalScaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,12 +36,17 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: globalScaffoldKey,
+        key: _scaffoldKey,
         body: FutureBuilder(
-          future: this.checkGPSAndLocationsPermission(context),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          future: this.checkGPSAndLocationsPermission(_scaffoldKey.currentContext),
+          builder: (BuildContext builderContext, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return Center(child: Text(snapshot.data),);
             } else {
@@ -55,13 +60,15 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
     );
   }
 
-  Future checkGPSAndLocationsPermission(BuildContext context) async {
+  Future checkGPSAndLocationsPermission(BuildContext mainContext) async {
     // Si el permiso y el gps estan activados
     final gpsPermission = await Permission.location.isGranted;
     final locationActiveGPS = await Geolocator.isLocationServiceEnabled();
 
     if (gpsPermission && locationActiveGPS) {
-      Navigator.pushReplacement(context, navigationFadeIn(context, HomePage()));
+      await Navigator.pushReplacement(
+          mainContext, navigationFadeIn(context, HomePage())
+      );
     } else if (!gpsPermission) {
       return 'Necesita el permiso de gps para usar la aplicacion';
     } else if (!locationActiveGPS) {

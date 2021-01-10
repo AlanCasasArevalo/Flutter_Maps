@@ -1,5 +1,6 @@
 import 'package:Flutter_Maps/bloc/map/map_bloc.dart';
 import 'package:Flutter_Maps/bloc/my_current_location/my_current_location_bloc.dart';
+import 'package:Flutter_Maps/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,43 +11,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
-    context.read<MyCurrentLocationBloc>().followInitialize();
+    BlocProvider.of<MyCurrentLocationBloc>(context, listen: false).followInitialize();
     super.initState();
   }
 
   @override
   void dispose() {
-    context.read<MyCurrentLocationBloc>().unfollow();
     super.dispose();
+    BlocProvider.of<MyCurrentLocationBloc>(context, listen: false).unfollow();
+  }
+
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<MyCurrentLocationBloc>(context, listen: false).unfollow();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      key: _scaffoldKey,
       body: BlocBuilder<MyCurrentLocationBloc, MyCurrentLocationState>(
         builder: (BuildContext context, state) {
           return _mapBuilder(state);
         },
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          LocationButton()
+        ],
+      ),
     );
   }
 
   Widget _mapBuilder(MyCurrentLocationState state) {
-    if (state.isLocationAvailable == false) return Center(child: Text('No hay localizacion aun........'));
+    if (state.isLocationAvailable == false)
+      return Center(child: Text('No hay localizacion aun........'));
 
-    final _mapBloc = BlocProvider.of<MapBloc>(context);
+    final _mapBloc = BlocProvider.of<MapBloc>(context, listen: false);
 
-    CameraPosition initialCameraPosition = CameraPosition (
-      target: state.location,
-      bearing: 0,
-      // Inclinacion del mapa
-      tilt: 0,
-      // Cuanto menor sea el zoom mas zona se ve del mapa
-      zoom: 17
-    );
+    CameraPosition initialCameraPosition = CameraPosition(
+        target: state.location,
+        bearing: 0,
+        // Inclinacion del mapa
+        tilt: 0,
+        // Cuanto menor sea el zoom mas zona se ve del mapa
+        zoom: 17);
     return GoogleMap(
       initialCameraPosition: initialCameraPosition,
       mapType: MapType.normal,

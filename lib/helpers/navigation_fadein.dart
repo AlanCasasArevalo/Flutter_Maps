@@ -1,6 +1,6 @@
 part of 'helpers.dart';
 
-Route navigationFadeIn(BuildContext context, Widget pageToNavigate) {
+Route navigationFadeIn(BuildContext contextReceived, Widget pageToNavigate) {
   return PageRouteBuilder(pageBuilder: (_, __, ___) => pageToNavigate,
     transitionDuration: Duration(milliseconds: 300),
     transitionsBuilder: (context, animation, _, child ) {

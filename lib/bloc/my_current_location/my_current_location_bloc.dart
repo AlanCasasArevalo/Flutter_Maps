@@ -14,7 +14,7 @@ class MyCurrentLocationBloc
   StreamSubscription<Position> _positionSubscription;
 
   void followInitialize() async {
-    final locationActiveGPS = await Geolocator.isLocationServiceEnabled();
+    await Geolocator.isLocationServiceEnabled();
 
     // Esta escuchando siempre la posicion del usuario
     _positionSubscription = Geolocator.getPositionStream(
