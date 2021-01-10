@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:Flutter_Maps/common/constants.dart';
 import 'package:Flutter_Maps/themes/uber_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,14 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc() : super(MapState());
 
   GoogleMapController _googleMapController;
+
+  // Polylines
+
+  Polyline _myRoute = Polyline(
+      polylineId:  PolylineId(Constants.polylineMyRouteName),
+    color: Colors.red,
+    width: 4
+  );
 
   void mapInitialize(GoogleMapController googleMapController) {
     if (!state.isMapReady) {
@@ -34,7 +43,16 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         isMapReady: true
       );
     } else if (event is OnLocationUpdate) {
-      print(event.location);
+      List<LatLng> pointsParam = [
+        ...this._myRoute.points,
+        event.location
+      ];
+      this._myRoute = this._myRoute.copyWith( pointsParam: pointsParam);
+
+      final currentPolylines = state.polylines;
+      currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
+
+      yield state.copyWith(polylines: currentPolylines);
     }
   }
 
