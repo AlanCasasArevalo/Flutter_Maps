@@ -33,7 +33,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       yield state.copyWith(
         isMapReady: true
       );
-    }  
+    } else if (event is OnLocationUpdate) {
+      print(event.location);
+    }
   }
 
 }

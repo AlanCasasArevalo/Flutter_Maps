@@ -66,7 +66,7 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
     final locationActiveGPS = await Geolocator.isLocationServiceEnabled();
 
     if (gpsPermission && locationActiveGPS) {
-      await Navigator.pushReplacement(
+      Navigator.pushReplacement(
           mainContext, navigationFadeIn(context, HomePage())
       );
     } else if (!gpsPermission) {

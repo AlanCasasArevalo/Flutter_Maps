@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
       return Center(child: Text('No hay localizacion aun........'));
 
     final _mapBloc = BlocProvider.of<MapBloc>(context, listen: false);
+    _mapBloc.add(OnLocationUpdate(state.location));
 
     CameraPosition initialCameraPosition = CameraPosition(
         target: state.location,
@@ -70,6 +71,8 @@ class _HomePageState extends State<HomePage> {
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       onMapCreated: _mapBloc.mapInitialize,
+      // Este parametro es para trazar la ruta seguida por el usuario
+      // polylines: ,
     );
   }
 }

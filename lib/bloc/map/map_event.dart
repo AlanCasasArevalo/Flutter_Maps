@@ -5,3 +5,9 @@ abstract class  MapEvent {}
 
 class OnMapReady extends MapEvent {
 }
+
+class OnLocationUpdate extends MapEvent {
+  final LatLng location;
+  OnLocationUpdate(this.location);
+}
+
