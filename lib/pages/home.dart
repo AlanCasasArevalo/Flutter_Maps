@@ -43,10 +43,13 @@ class _HomePageState extends State<HomePage> {
               return _mapBuilder(state);
             },
           ),
-          Positioned(
-            top: 15,
-              child: SearchBar()
-          )
+          // TODO: Hacer el toggle cuando estoy manualmente y cuando no
+          // Positioned(
+          //   top: 15,
+          //     child: SearchBar()
+          // )
+
+          PinMarker()
         ],
       ),
       floatingActionButton: Column(

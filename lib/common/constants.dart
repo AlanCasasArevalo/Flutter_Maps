@@ -6,4 +6,5 @@ class Constants {
   static String searchBarPlaceholder = '¿Donde quieres ir?';
   static String searchBarPlaceholderEditing = 'Buscar destino .....';
   static String searchBarPinTitle = 'Colocar ubicación manualmente';
+  static String pinMarkerDestinationConfirmation = 'Confirmar destino';
 }

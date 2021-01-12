@@ -4,7 +4,6 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _mapBloc = BlocProvider.of<MapBloc>(context);
     final size = MediaQuery.of(context).size;
 
     return SafeArea(
