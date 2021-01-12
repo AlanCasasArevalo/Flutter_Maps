@@ -20,7 +20,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   Polyline _myRoute = Polyline(
       polylineId: PolylineId(Constants.polylineMyRouteName),
-      color: Colors.black87,
+      color: Colors.transparent,
       width: 4
   );
 
@@ -47,6 +47,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       yield* this._onDrawTrack();
     } else if (event is OnFollowLocationChange) {
       yield* this._onFollowLocationChange();
+    } else if (event is OnMapChangeLocation) {
+      yield* this._onMapChangeLocation(event);
     }
   }
 
@@ -88,4 +90,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       followLocation: !state.followLocation,
     );
   }
+
+  Stream<MapState> _onMapChangeLocation(OnMapChangeLocation event) async* {
+    yield state.copyWith(centralLocation: event.location);
+  }
+
 }

@@ -74,7 +74,10 @@ class _HomePageState extends State<HomePage> {
       zoomControlsEnabled: false,
       onMapCreated: _mapBloc.mapInitialize,
       // Este parametro es para trazar la ruta seguida por el usuario
-      polylines: _mapBloc.state.polylines.values.toSet() ,
+      polylines: _mapBloc.state.polylines.values.toSet(),
+      onCameraMove: (cameraPosition) {
+        _mapBloc.add(OnMapChangeLocation(cameraPosition.target));
+      },
     );
   }
 }

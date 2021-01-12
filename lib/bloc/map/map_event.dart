@@ -17,3 +17,8 @@ class OnDrawTrack extends MapEvent {
 class OnFollowLocationChange extends MapEvent {
 }
 
+class OnMapChangeLocation extends MapEvent {
+  final LatLng location;
+  OnMapChangeLocation(this.location);
+}
+
