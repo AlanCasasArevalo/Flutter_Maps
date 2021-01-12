@@ -13,6 +13,10 @@ class SearchBloc
 
   @override
   Stream<SearchState> mapEventToState(SearchEvent event) async* {
-
+    if (event is OnPinMarkedActivated) {
+      yield state.copyWith(manualSelection: true);
+    } else if (event is OnPinMarkedDeactivated) {
+      yield state.copyWith(manualSelection: false);
+    }
   }
 }

@@ -1,8 +1,21 @@
 part of 'widgets.dart';
 
 class SearchBar extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<SearchBloc, SearchState> (
+      builder: (context, state) {
+        if (state.manualSelection) {
+          return Container();
+        } else {
+          return buildSearchBar(context);
+        }
+      },
+    );
+  }
+
+  Widget buildSearchBar(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
 
@@ -14,7 +27,7 @@ class SearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             final SearchResult result = await showSearch(context: context, delegate: SearchDestination());
-            this._searchResults(result);
+            this._searchResults(context, result);
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -36,7 +49,12 @@ class SearchBar extends StatelessWidget {
     );
   }
 
-  void _searchResults(SearchResult result) {
+  void _searchResults(BuildContext context, SearchResult result) {
+    final _searchBloc = BlocProvider.of<SearchBloc>(context);
     if(result.canceled) return;
+    if (result.manual) {
+      _searchBloc.add(OnPinMarkedActivated());
+      return;
+    }
   }
 }

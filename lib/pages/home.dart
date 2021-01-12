@@ -44,11 +44,10 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           // TODO: Hacer el toggle cuando estoy manualmente y cuando no
-          // Positioned(
-          //   top: 15,
-          //     child: SearchBar()
-          // )
-
+          Positioned(
+            top: 15,
+              child: SearchBar()
+          ),
           PinMarker()
         ],
       ),

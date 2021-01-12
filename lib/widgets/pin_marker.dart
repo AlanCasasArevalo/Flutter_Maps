@@ -3,8 +3,19 @@ part of 'widgets.dart';
 class PinMarker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+        return state.manualSelection ? _PinMarkerBuilder() : Container();
+      },
+    );
+  }
+}
 
-  final size = MediaQuery.of(context).size;
+class _PinMarkerBuilder extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final _searchBloc = BlocProvider.of<SearchBloc>(context);
+    final size = MediaQuery.of(context).size;
 
     return Stack(
       children: [
@@ -16,18 +27,24 @@ class PinMarker extends StatelessWidget {
             maxRadius: 25,
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black87,),
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black87,
+              ),
               onPressed: () {
-                // TODO: Hacer algo con el boton de regresar
+                _searchBloc.add(OnPinMarkedDeactivated());
+                return;
               },
             ),
           ),
         ),
         Center(
           child: Transform.translate(
-            offset: Offset(0, -13),
-              child: Icon(Icons.location_on, size: 50,)
-          ),
+              offset: Offset(0, -13),
+              child: Icon(
+                Icons.location_on,
+                size: 50,
+              )),
         ),
         // Boton de confirmar destino
         Positioned(
@@ -35,18 +52,21 @@ class PinMarker extends StatelessWidget {
           left: 40,
           child: MaterialButton(
             minWidth: size.width - 120,
-            child: Text(Constants.pinMarkerDestinationConfirmation, style: TextStyle(color: Colors.white),),
+            child: Text(
+              Constants.pinMarkerDestinationConfirmation,
+              style: TextStyle(color: Colors.white),
+            ),
             color: Colors.black87,
             shape: StadiumBorder(),
             elevation: 0,
             splashColor: Colors.transparent,
             onPressed: () {
               // TODO: Hacer algo
+              print('Confirmar destino');
             },
           ),
         )
       ],
     );
   }
-
 }
