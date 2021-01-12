@@ -11,12 +11,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    BlocProvider.of<MyCurrentLocationBloc>(context, listen: false).followInitialize();
+    BlocProvider.of<MyCurrentLocationBloc>(context, listen: false)
+        .followInitialize();
     super.initState();
   }
 
@@ -36,10 +36,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: BlocBuilder<MyCurrentLocationBloc, MyCurrentLocationState>(
-        builder: (BuildContext context, state) {
-          return _mapBuilder(state);
-        },
+      body: Stack(
+        children: [
+          BlocBuilder<MyCurrentLocationBloc, MyCurrentLocationState>(
+            builder: (BuildContext context, state) {
+              return _mapBuilder(state);
+            },
+          ),
+          Positioned(
+            top: 15,
+              child: SearchBar()
+          )
+        ],
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
