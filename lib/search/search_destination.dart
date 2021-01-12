@@ -1,7 +1,8 @@
 import 'package:Flutter_Maps/common/constants.dart';
+import 'package:Flutter_Maps/models/search_result.dart';
 import 'package:flutter/material.dart';
 
-class SearchDestination extends SearchDelegate {
+class SearchDestination extends SearchDelegate<SearchResult> {
 
   @override
   final String searchFieldLabel;
@@ -17,8 +18,8 @@ class SearchDestination extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: Devolver las busquedas
-    return IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => this.close(context, null));
+    final searchResult = SearchResult(canceled: true);
+    return IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () => this.close(context, searchResult));
   }
 
   @override
@@ -34,9 +35,7 @@ class SearchDestination extends SearchDelegate {
           leading: Icon(Icons.location_on),
           title: Text(Constants.searchBarPinTitle),
           onTap: () {
-            // TODO: Devolver las busquedas
-            print('Pinchando en colocar pin');
-            this.close(context, null);
+            this.close(context, SearchResult(canceled: false, manual: true));
           },
         )
       ],
