@@ -9,13 +9,13 @@ class SearchBar extends StatelessWidget {
         if (state.manualSelection) {
           return Container();
         } else {
-          return buildSearchBar(context);
+          return FadeInDown(child: _buildSearchBar(context));
         }
       },
     );
   }
 
-  Widget buildSearchBar(BuildContext context) {
+  Widget _buildSearchBar(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
 

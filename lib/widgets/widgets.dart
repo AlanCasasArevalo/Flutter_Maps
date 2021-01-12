@@ -4,6 +4,7 @@ import 'package:Flutter_Maps/bloc/search/search_bloc.dart';
 import 'package:Flutter_Maps/common/constants.dart';
 import 'package:Flutter_Maps/models/search_result.dart';
 import 'package:Flutter_Maps/search/search_destination.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 part 'location_button.dart';
