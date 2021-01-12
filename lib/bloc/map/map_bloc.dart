@@ -43,32 +43,39 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         isMapReady: true
       );
     } else if (event is OnLocationUpdate) {
-      List<LatLng> pointsParam = [
-        ...this._myRoute.points,
-        event.location
-      ];
-      this._myRoute = this._myRoute.copyWith( pointsParam: pointsParam);
-
-      final currentPolylines = state.polylines;
-      currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
-
-      yield state.copyWith(polylines: currentPolylines);
+      yield* this._onLocationUpdate(event);
     } else if (event is OnDrawTrack) {
-      if (!state.isWantToDrawTrack) {
-        this._myRoute = this._myRoute.copyWith(colorParam: Colors.black87);
-      } else {
-        this._myRoute = this._myRoute.copyWith(colorParam: Colors.transparent);
-      }
-
-      final currentPolylines = state.polylines;
-      currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
-
-      yield state.copyWith(
-        isWantToDrawTrack: !state.isWantToDrawTrack,
-          polylines: currentPolylines
-      );
-
+      yield* this._onDrawTrack();
     }
+  }
+
+  Stream<MapState> _onDrawTrack() async* {
+      if (!state.isWantToDrawTrack) {
+      this._myRoute = this._myRoute.copyWith(colorParam: Colors.black87);
+    } else {
+      this._myRoute = this._myRoute.copyWith(colorParam: Colors.transparent);
+    }
+
+    final currentPolylines = state.polylines;
+    currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
+
+    yield state.copyWith(
+      isWantToDrawTrack: !state.isWantToDrawTrack,
+        polylines: currentPolylines
+    );
+  }
+
+  Stream<MapState> _onLocationUpdate(OnLocationUpdate event) async* {
+    List<LatLng> pointsParam = [
+      ...this._myRoute.points,
+      event.location
+    ];
+    this._myRoute = this._myRoute.copyWith( pointsParam: pointsParam);
+
+    final currentPolylines = state.polylines;
+    currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
+
+    yield state.copyWith(polylines: currentPolylines);
   }
 
 }
