@@ -15,6 +15,7 @@ class SearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             print('Buscandoooooo');
+            showSearch(context: context, delegate: SearchDestination());
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
