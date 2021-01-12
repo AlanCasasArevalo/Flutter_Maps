@@ -14,3 +14,6 @@ class OnLocationUpdate extends MapEvent {
 class OnDrawTrack extends MapEvent {
 }
 
+class OnFollowLocationChange extends MapEvent {
+}
+

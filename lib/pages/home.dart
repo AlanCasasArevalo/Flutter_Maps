@@ -45,7 +45,8 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           LocationButton(),
-          MyRouteButton()
+          FollowLocationButton(),
+          MyRouteButton(),
         ],
       ),
     );

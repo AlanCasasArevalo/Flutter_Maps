@@ -4,3 +4,4 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 part 'location_button.dart';
 part 'my_route_button.dart';
+part 'follow_location_button.dart';
