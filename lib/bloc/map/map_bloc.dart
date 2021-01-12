@@ -18,7 +18,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   Polyline _myRoute = Polyline(
       polylineId:  PolylineId(Constants.polylineMyRouteName),
-    color: Colors.red,
+    color: Colors.black87,
     width: 4
   );
 
@@ -53,6 +53,21 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
 
       yield state.copyWith(polylines: currentPolylines);
+    } else if (event is OnDrawTrack) {
+      if (!state.isWantToDrawTrack) {
+        this._myRoute = this._myRoute.copyWith(colorParam: Colors.black87);
+      } else {
+        this._myRoute = this._myRoute.copyWith(colorParam: Colors.transparent);
+      }
+
+      final currentPolylines = state.polylines;
+      currentPolylines[Constants.polylineMyRouteName] = this._myRoute;
+
+      yield state.copyWith(
+        isWantToDrawTrack: !state.isWantToDrawTrack,
+          polylines: currentPolylines
+      );
+
     }
   }
 

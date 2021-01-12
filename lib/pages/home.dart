@@ -44,7 +44,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          LocationButton()
+          LocationButton(),
+          MyRouteButton()
         ],
       ),
     );
