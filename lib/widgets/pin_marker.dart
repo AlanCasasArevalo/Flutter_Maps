@@ -79,6 +79,9 @@ class _PinMarkerBuilder extends StatelessWidget {
   }
 
   void _destinationCalculate(BuildContext context) async {
+
+    alertCalculate(context);
+
     final _trafficService = new TrafficService();
     final _myCurrentLocationBloc = BlocProvider.of<MyCurrentLocationBloc>(context);
     final _mapBloc = BlocProvider.of<MapBloc>(context);
@@ -104,5 +107,7 @@ class _PinMarkerBuilder extends StatelessWidget {
       distance: distance,
       duration: duration
     ));
+
+    Navigator.of(context).pop();
   }
 }

@@ -2,6 +2,7 @@ import 'package:Flutter_Maps/bloc/map/map_bloc.dart';
 import 'package:Flutter_Maps/bloc/my_current_location/my_current_location_bloc.dart';
 import 'package:Flutter_Maps/bloc/search/search_bloc.dart';
 import 'package:Flutter_Maps/common/constants.dart';
+import 'package:Flutter_Maps/helpers/helpers.dart';
 import 'package:Flutter_Maps/models/search_result.dart';
 import 'package:Flutter_Maps/search/search_destination.dart';
 import 'package:Flutter_Maps/services/traffic_service.dart';
