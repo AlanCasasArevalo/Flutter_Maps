@@ -68,7 +68,6 @@ class _PinMarkerBuilder extends StatelessWidget {
               splashColor: Colors.transparent,
               onPressed: () {
                 // TODO: Hacer algo
-                print('Confirmar destino');
                 this._destinationCalculate(context);
               },
             ),
@@ -84,6 +83,7 @@ class _PinMarkerBuilder extends StatelessWidget {
 
     final _trafficService = new TrafficService();
     final _myCurrentLocationBloc = BlocProvider.of<MyCurrentLocationBloc>(context);
+    final _searchBloc = BlocProvider.of<SearchBloc>(context);
     final _mapBloc = BlocProvider.of<MapBloc>(context);
 
     final start = _myCurrentLocationBloc.state.location;
@@ -108,6 +108,7 @@ class _PinMarkerBuilder extends StatelessWidget {
       duration: duration
     ));
 
+    _searchBloc.add(OnPinMarkedDeactivated());
     Navigator.of(context).pop();
   }
 }

@@ -24,10 +24,7 @@ class TrafficService {
   final String _apiKey = 'pk.eyJ1IjoiYWxhbmNhc2FzIiwiYSI6ImNranUwbDk1ODhlY3AycmxnMW5qeHNoZjEifQ.gSDnQJjTExY0-saSO01d3Q';
 
   Future<RoutesResponse> getInitialEndCoordinates(LatLng start, LatLng end, RouteProfile type) async {
-    print(start);
-    print(end);
     String routeProfile = '';
-
     switch (type) {
       case RouteProfile.driving:
         routeProfile = 'driving';
@@ -57,7 +54,6 @@ class TrafficService {
       final data = RoutesResponse.fromJson(response.data);
       return data;
     } catch (error) {
-      print(error);
     }
   }
 }
