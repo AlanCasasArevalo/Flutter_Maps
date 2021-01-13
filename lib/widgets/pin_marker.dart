@@ -69,11 +69,40 @@ class _PinMarkerBuilder extends StatelessWidget {
               onPressed: () {
                 // TODO: Hacer algo
                 print('Confirmar destino');
+                this._destinationCalculate(context);
               },
             ),
           ),
         )
       ],
     );
+  }
+
+  void _destinationCalculate(BuildContext context) async {
+    final _trafficService = new TrafficService();
+    final _myCurrentLocationBloc = BlocProvider.of<MyCurrentLocationBloc>(context);
+    final _mapBloc = BlocProvider.of<MapBloc>(context);
+
+    final start = _myCurrentLocationBloc.state.location;
+    final end = _mapBloc.state.centralLocation;
+    final response = await _trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving);
+
+    final geometry = response.routes[0].geometry;
+    final duration = response.routes[0].duration;
+    final distance = response.routes[0].distance;
+
+    // Decodificar
+    final points = PolylineThirdParty.Polyline.Decode(
+      encodedString: geometry,
+      precision: 6
+    ).decodedCoords;
+
+    final List<LatLng> coordList = points.map((point) => LatLng(point[0], point[1])).toList();
+
+    _mapBloc.add(OnLocationUserSelected(
+      coordinates: coordList,
+      distance: distance,
+      duration: duration
+    ));
   }
 }

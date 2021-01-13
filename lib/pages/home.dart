@@ -76,17 +76,22 @@ class _HomePageState extends State<HomePage> {
         tilt: 0,
         // Cuanto menor sea el zoom mas zona se ve del mapa
         zoom: 17);
-    return GoogleMap(
-      initialCameraPosition: initialCameraPosition,
-      mapType: MapType.normal,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: false,
-      zoomControlsEnabled: false,
-      onMapCreated: _mapBloc.mapInitialize,
-      // Este parametro es para trazar la ruta seguida por el usuario
-      polylines: _mapBloc.state.polylines.values.toSet(),
-      onCameraMove: (cameraPosition) {
-        _mapBloc.add(OnMapChangeLocation(cameraPosition.target));
+
+    return BlocBuilder<MapBloc, MapState>(
+      builder: (context, state) {
+        return GoogleMap(
+          initialCameraPosition: initialCameraPosition,
+          mapType: MapType.normal,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          onMapCreated: _mapBloc.mapInitialize,
+          // Este parametro es para trazar la ruta seguida por el usuario
+          polylines: _mapBloc.state.polylines.values.toSet(),
+          onCameraMove: (cameraPosition) {
+            _mapBloc.add(OnMapChangeLocation(cameraPosition.target));
+          },
+        );
       },
     );
   }

@@ -22,3 +22,11 @@ class OnMapChangeLocation extends MapEvent {
   OnMapChangeLocation(this.location);
 }
 
+class OnLocationUserSelected extends MapEvent {
+  final List<LatLng> coordinates;
+  final double distance;
+  final double duration;
+
+  OnLocationUserSelected({this.coordinates, this.distance, this.duration});
+}
+
