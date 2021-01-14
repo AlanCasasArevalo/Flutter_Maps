@@ -26,8 +26,9 @@ class SearchBar extends StatelessWidget {
         height: 50,
         child: GestureDetector(
           onTap: () async {
-            final SearchResult result = await showSearch(context: context, delegate: SearchDestination(proximity: context.read<MyCurrentLocationBloc>().state.location));
-            this._searchResults(context, result);
+            final location = context.read<MyCurrentLocationBloc>().state.location;
+            final SearchResult result = await showSearch(context: context, delegate: SearchDestination(proximity: location));
+            this._searchResults(context, result, location);
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -49,12 +50,36 @@ class SearchBar extends StatelessWidget {
     );
   }
 
-  void _searchResults(BuildContext context, SearchResult result) {
+  void _searchResults(BuildContext context, SearchResult result, LatLng location) async {
     final _searchBloc = BlocProvider.of<SearchBloc>(context);
+    final _mapBloc = BlocProvider.of<MapBloc>(context);
+    final _myCurrentLocationBloc = BlocProvider.of<MyCurrentLocationBloc>(context);
+    final trafficService = new TrafficService();
+
     if(result.canceled) return;
     if (result.manual) {
       _searchBloc.add(OnPinMarkedActivated());
       return;
     }
+
+    final start = location;
+    final end = result.position;
+
+    // final drivingTraffic = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving_traffic);
+    final driving = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving);
+    // final cycling = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.cycling);
+    // final walking = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.walking);
+
+    final geometry = driving.routes[0].geometry;
+    final duration = driving.routes[0].duration;
+    final distance = driving.routes[0].distance;
+    
+    final points = PolylineThirdParty.Polyline.Decode(encodedString: geometry, precision: 6);
+    
+    final List<LatLng> coordinates = points.decodedCoords.map((point) => LatLng(point[0], point[1])).toList();
+
+    _mapBloc.add(OnLocationUserSelected(coordinates: coordinates, distance: distance, duration: duration));
+
+    Navigator.of(context).pop();
   }
 }

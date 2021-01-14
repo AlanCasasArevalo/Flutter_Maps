@@ -33,7 +33,7 @@ class TrafficService {
 
   final String _baseDirectionsURL = 'https://api.mapbox.com/directions/v5/mapbox/';
   final String _baseGeocodingURL = 'https://api.mapbox.com/geocoding/v5/mapbox';
-  final String _apiKey = 'pk.eyJ1IjoiYWxhbmNhc2FzIiwiYSI6ImNranUwbDk1ODhlY3AycmxnMW5qeHNoZjEifQ.gSDnQJjTExY0-saSO01d3Q';
+  final String _apiKey = 'YOUR_API_KEY';
 
   Future<RoutesResponse> getInitialEndCoordinates(LatLng start, LatLng end, RouteProfile type) async {
     String routeProfile = '';
