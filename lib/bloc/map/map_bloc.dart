@@ -140,6 +140,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     newMarkers[Constants.markerRouteStart] = startMarker;
     newMarkers[Constants.markerRouteDestination] = endMarker;
 
+    Future.delayed(Duration(milliseconds: 300)).then((value) {
+      _googleMapController.showMarkerInfoWindow(MarkerId(Constants.markerRouteDestination));
+    });
+    
     yield state.copyWith(
       polylines: currentPolylines,
       markers: newMarkers
