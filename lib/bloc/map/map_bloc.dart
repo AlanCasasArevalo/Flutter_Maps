@@ -22,14 +22,12 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Polyline _myRoute = Polyline(
       polylineId: PolylineId(Constants.polylineMyRouteName),
       color: Colors.transparent,
-      width: 4
-  );
+      width: 4);
 
   Polyline _routeDestination = Polyline(
       polylineId: PolylineId(Constants.polylineRouteDestinationName),
-      color: Colors.cyanAccent,
-      width: 4
-  );
+      color: Colors.blueAccent,
+      width: 4);
 
   void mapInitialize(GoogleMapController googleMapController) {
     if (!state.isMapReady) {
@@ -77,7 +75,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   }
 
   Stream<MapState> _onLocationUpdate(OnLocationUpdate event) async* {
-
     if (state.followLocation) {
       this.cameraMove(event.location);
     }
@@ -104,58 +101,61 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     yield state.copyWith(centralLocation: event.location);
   }
 
-  Stream<MapState> _onLocationUserSelected(OnLocationUserSelected event) async* {
-    this._routeDestination = this._routeDestination.copyWith(
-      pointsParam: event.coordinates
-    );
+  Stream<MapState> _onLocationUserSelected(
+      OnLocationUserSelected event) async* {
+    this._routeDestination =
+        this._routeDestination.copyWith(pointsParam: event.coordinates);
 
     final currentPolylines = state.polylines;
-    currentPolylines[Constants.polylineRouteDestinationName] = this._routeDestination;
+    currentPolylines[Constants.polylineRouteDestinationName] =
+        this._routeDestination;
 
     // Initial marker
-    final initialIcon = await getImageAssetMarker();
-    final destinationIcon = await getImageAssetMarkerFromURL();
+    // final initialIcon = await getImageAssetMarker();
+    // final destinationIcon = await getImageAssetMarkerFromURL();
 
     // Markers
     final duration = (event.duration / 60).floor();
+    final initialIcon = await getStartIconMarker(duration);
     final startMarker = new Marker(
-      icon: initialIcon,
-      markerId: MarkerId(Constants.markerRouteStart),
-      position: event.coordinates[0],
-      infoWindow: InfoWindow(
-        onTap: (){},
-        title: Constants.startWindowInformationTitle,
-        snippet: Constants.startWindowInformationSnippet + '$duration ${Constants.startWindowInformationDuration}',
-        anchor: Offset(1.0, 1.0)
-      )
-    );
+        anchor: Offset(0.0, 1.0),
+        icon: initialIcon,
+        markerId: MarkerId(Constants.markerRouteStart),
+        position: event.coordinates[0],
+        infoWindow: InfoWindow(
+            onTap: () {},
+            title: Constants.startWindowInformationTitle,
+            snippet: Constants.startWindowInformationSnippet +
+                '$duration ${Constants.startWindowInformationDuration}',
+            anchor: Offset(1.0, 1.0)));
 
     final kilometers = (event.distance / 1000);
     final distanceRounded = (kilometers * 100).floor().toDouble();
     final distance = distanceRounded / 100;
+
+    final destinationIcon =
+        await getDestinationIconMarker(distance, event.destinationName);
+
     final endMarker = new Marker(
-      anchor: Offset(0.5, 0.9),
-      icon: destinationIcon,
-      markerId: MarkerId(Constants.markerRouteDestination),
-      position: event.coordinates.last,
-      infoWindow: InfoWindow(
-        title: event.destinationName,
-        snippet: Constants.destinationWindowInformationSnippet + '$distance ${Constants.destinationWindowInformationDistance}',
-      )
-    );
+        anchor: Offset(0.0, 0.90),
+        icon: destinationIcon,
+        markerId: MarkerId(Constants.markerRouteDestination),
+        position: event.coordinates.last,
+        infoWindow: InfoWindow(
+          title: event.destinationName,
+          snippet: Constants.destinationWindowInformationSnippet +
+              '$distance ${Constants.destinationWindowInformationDistance}',
+        ));
 
     final newMarkers = {...state.markers};
     newMarkers[Constants.markerRouteStart] = startMarker;
     newMarkers[Constants.markerRouteDestination] = endMarker;
 
     Future.delayed(Duration(milliseconds: 300)).then((value) {
-      _googleMapController.showMarkerInfoWindow(MarkerId(Constants.markerRouteDestination));
+      _googleMapController
+          .showMarkerInfoWindow(MarkerId(Constants.markerRouteDestination));
     });
-    
-    yield state.copyWith(
-      polylines: currentPolylines,
-      markers: newMarkers
-    );
-  }
 
+    yield state.copyWith(polylines: currentPolylines, markers: newMarkers);
+  }
 }

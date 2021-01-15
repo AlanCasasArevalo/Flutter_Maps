@@ -1,12 +1,11 @@
-import 'package:Flutter_Maps/common/constants.dart';
-import 'package:flutter/material.dart';
+part of 'custom_markers.dart';
 
 class DestinationMarkerPainter extends CustomPainter {
 
-  final double meters;
+  final double distance;
   final String description;
 
-  DestinationMarkerPainter({this.meters, this.description});
+  DestinationMarkerPainter({this.distance, this.description});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -48,13 +47,11 @@ class DestinationMarkerPainter extends CustomPainter {
     canvas.drawRect(blackBox, paint);
     
     // Numero de kilometros
-    double kilometers = this.meters / 1000;
-    final distance = kilometers.toStringAsFixed(1);
     _textPainterBuilder(
       canvas: canvas,
       fontSize: 25,
       offset: Offset(0, 35),
-      text: '$distance',
+      text: '${distance.toStringAsFixed(1)}',
       fontWeight: FontWeight.w400,
       minWidth: 70,
       maxWidth: 70

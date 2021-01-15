@@ -1,5 +1,4 @@
-import 'package:Flutter_Maps/common/constants.dart';
-import 'package:flutter/material.dart';
+part of 'custom_markers.dart';
 
 class StartMarkerPainter extends CustomPainter {
 
