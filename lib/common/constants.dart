@@ -14,6 +14,6 @@ class Constants {
   static String startWindowInformationSnippet = 'Duracion del recorrido: ';
   static String startWindowInformationDuration = ' minutos';
   static String destinationWindowInformationSnippet = 'Distancia en KM: ';
-  static String destinationWindowInformationDistance = ' KM';
+  static String destinationWindowInformationDistance = 'KM';
   static String startMarkerDurationTime = 'Min';
 }
