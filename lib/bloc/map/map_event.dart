@@ -26,7 +26,8 @@ class OnLocationUserSelected extends MapEvent {
   final List<LatLng> coordinates;
   final double distance;
   final double duration;
+  final String destinationName;
 
-  OnLocationUserSelected({this.coordinates, this.distance, this.duration});
+  OnLocationUserSelected({this.coordinates, this.distance, this.duration, this.destinationName});
 }
 

@@ -112,20 +112,28 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     currentPolylines[Constants.polylineRouteDestinationName] = this._routeDestination;
 
     // Markers
+    final duration = (event.duration / 60).floor();
     final startMarker = new Marker(
       markerId: MarkerId(Constants.markerRouteStart),
       position: event.coordinates[0],
       infoWindow: InfoWindow(
         onTap: (){},
-        title: 'Donde estoy',
-        snippet: 'Desde donde quiero movermeeeee',
+        title: Constants.startWindowInformationTitle,
+        snippet: Constants.startWindowInformationSnippet + '$duration ${Constants.startWindowInformationDuration}',
         anchor: Offset(1.0, 1.0)
       )
     );
 
+    final kilometers = (event.distance / 1000);
+    final distanceRounded = (kilometers * 100).floor().toDouble();
+    final distance = distanceRounded / 100;
     final endMarker = new Marker(
       markerId: MarkerId(Constants.markerRouteDestination),
-      position: event.coordinates.last
+      position: event.coordinates.last,
+      infoWindow: InfoWindow(
+        title: event.destinationName,
+        snippet: Constants.destinationWindowInformationSnippet + '$distance ${Constants.destinationWindowInformationDistance}',
+      )
     );
 
     final newMarkers = {...state.markers};

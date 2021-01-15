@@ -80,8 +80,8 @@ class SearchBar extends StatelessWidget {
     final points = PolylineThirdParty.Polyline.Decode(encodedString: geometry, precision: 6);
     
     final List<LatLng> coordinates = points.decodedCoords.map((point) => LatLng(point[0], point[1])).toList();
-
-    _mapBloc.add(OnLocationUserSelected(coordinates: coordinates, distance: distance, duration: duration));
+    // TODO: Arreglar el searchbar cuando buscas un lugar falta el nombre del destino como se hace en el pin_marker =>     final endCoordinatesInformation = await _trafficService.getCoordinatesInformation(end);
+    // _mapBloc.add(OnLocationUserSelected(coordinates: coordinates, distance: distance, duration: duration, destinationName: ));
 
     _searchBloc.add(OnAddSearchHistory(searchHistory: result));
 

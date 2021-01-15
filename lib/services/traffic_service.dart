@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:Flutter_Maps/helpers/debouncer.dart';
+import 'package:Flutter_Maps/models/coordinates_information_response.dart';
 import 'package:Flutter_Maps/models/routes_response.dart';
 import 'package:Flutter_Maps/models/search_response.dart';
 import 'package:dio/dio.dart';
@@ -66,6 +67,7 @@ class TrafficService {
       final data = RoutesResponse.fromJson(response.data);
       return data;
     } catch (error) {
+      return RoutesResponse(routes: [Route()]);
     }
   }
 
@@ -84,6 +86,24 @@ class TrafficService {
       return searchResponse;
     } catch (error) {
       return SearchResponse(features: []);
+    }
+  }
+
+  Future<CoordinatesInformationResponse> getCoordinatesInformation(LatLng destination) async {
+
+    final coordString = '${destination.longitude},${destination.latitude}';
+    final url = '${this._baseGeocodingURL}.places/$coordString.json';
+    try {
+      final response = await this._dio.get(url, queryParameters: {
+        'autocomplete': 'true',
+        'access_token': _apiKey,
+        'language': 'es'
+      });
+      final coordinatesInformationResponse = coordinatesInformationResponseFromJson(response.data);
+      return coordinatesInformationResponse;
+    } catch (error) {
+      print(error);
+      return CoordinatesInformationResponse();
     }
   }
 

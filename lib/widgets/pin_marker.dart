@@ -67,7 +67,6 @@ class _PinMarkerBuilder extends StatelessWidget {
               elevation: 0,
               splashColor: Colors.transparent,
               onPressed: () {
-                // TODO: Hacer algo
                 this._destinationCalculate(context);
               },
             ),
@@ -89,10 +88,12 @@ class _PinMarkerBuilder extends StatelessWidget {
     final start = _myCurrentLocationBloc.state.location;
     final end = _mapBloc.state.centralLocation;
     final response = await _trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving);
+    final endCoordinatesInformation = await _trafficService.getCoordinatesInformation(end);
 
     final geometry = response.routes[0].geometry;
     final duration = response.routes[0].duration;
     final distance = response.routes[0].distance;
+    final destinationName = endCoordinatesInformation.features[0].placeNameEs;
 
     // Decodificar
     final points = PolylineThirdParty.Polyline.Decode(
@@ -105,7 +106,8 @@ class _PinMarkerBuilder extends StatelessWidget {
     _mapBloc.add(OnLocationUserSelected(
       coordinates: coordList,
       distance: distance,
-      duration: duration
+      duration: duration,
+      destinationName: destinationName
     ));
 
     _searchBloc.add(OnPinMarkedDeactivated());

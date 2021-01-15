@@ -10,4 +10,9 @@ class Constants {
   static String searchBarPlaceholderEditing = 'Buscar destino .....';
   static String searchBarPinTitle = 'Colocar ubicación manualmente';
   static String pinMarkerDestinationConfirmation = 'Confirmar destino';
+  static String startWindowInformationTitle = 'Mi localizacion';
+  static String startWindowInformationSnippet = 'Duracion del recorrido: ';
+  static String startWindowInformationDuration = ' minutos';
+  static String destinationWindowInformationSnippet = 'Distancia en KM: ';
+  static String destinationWindowInformationDistance = ' KM';
 }
