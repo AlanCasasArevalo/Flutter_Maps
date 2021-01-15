@@ -57,7 +57,7 @@ class SearchBar extends StatelessWidget {
   void _searchResults(BuildContext context, SearchResult result, LatLng location) async {
     final _searchBloc = BlocProvider.of<SearchBloc>(context);
     final _mapBloc = BlocProvider.of<MapBloc>(context);
-    final trafficService = new TrafficService();
+    final _trafficService = new TrafficService();
 
     if(result.canceled) return;
     if (result.manual) {
@@ -69,19 +69,19 @@ class SearchBar extends StatelessWidget {
     final end = result.position;
 
     // final drivingTraffic = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving_traffic);
-    final driving = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving);
+    final driving = await _trafficService.getInitialEndCoordinates(start, end, RouteProfile.driving);
     // final cycling = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.cycling);
     // final walking = await trafficService.getInitialEndCoordinates(start, end, RouteProfile.walking);
 
     final geometry = driving.routes[0].geometry;
     final duration = driving.routes[0].duration;
     final distance = driving.routes[0].distance;
-    
+    final destinationName = result.destinationName;
+
     final points = PolylineThirdParty.Polyline.Decode(encodedString: geometry, precision: 6);
     
     final List<LatLng> coordinates = points.decodedCoords.map((point) => LatLng(point[0], point[1])).toList();
-    // TODO: Arreglar el searchbar cuando buscas un lugar falta el nombre del destino como se hace en el pin_marker =>     final endCoordinatesInformation = await _trafficService.getCoordinatesInformation(end);
-    // _mapBloc.add(OnLocationUserSelected(coordinates: coordinates, distance: distance, duration: duration, destinationName: ));
+    _mapBloc.add(OnLocationUserSelected(coordinates: coordinates, distance: distance, duration: duration, destinationName: destinationName));
 
     _searchBloc.add(OnAddSearchHistory(searchHistory: result));
 
