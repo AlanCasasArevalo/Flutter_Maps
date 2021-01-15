@@ -15,4 +15,5 @@ class Constants {
   static String startWindowInformationDuration = ' minutos';
   static String destinationWindowInformationSnippet = 'Distancia en KM: ';
   static String destinationWindowInformationDistance = ' KM';
+  static String startMarkerDurationTime = 'Min';
 }
