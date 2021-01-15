@@ -111,9 +111,26 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final currentPolylines = state.polylines;
     currentPolylines[Constants.polylineRouteDestinationName] = this._routeDestination;
 
+    // Markers
+    final startMarker = new Marker(
+      markerId: MarkerId(Constants.markerRouteStart),
+      // La primera coordenada es la posicion en la que va a iniciar la ruta
+      position: event.coordinates[0]
+    );
+
+    final endMarker = new Marker(
+      markerId: MarkerId(Constants.markerRouteDestination),
+      // La primera coordenada es la posicion en la que va a iniciar la ruta
+      position: event.coordinates.last
+    );
+
+    final newMarkers = {...state.markers};
+    newMarkers[Constants.markerRouteStart] = startMarker;
+    newMarkers[Constants.markerRouteDestination] = endMarker;
+
     yield state.copyWith(
-      polylines: currentPolylines
-      // TODO: Marcadores
+      polylines: currentPolylines,
+      markers: newMarkers
     );
   }
 

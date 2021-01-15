@@ -91,6 +91,7 @@ class _HomePageState extends State<HomePage> {
           onCameraMove: (cameraPosition) {
             _mapBloc.add(OnMapChangeLocation(cameraPosition.target));
           },
+          markers: _mapBloc.state.markers.values.toSet(),
         );
       },
     );

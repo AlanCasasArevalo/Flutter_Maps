@@ -57,7 +57,6 @@ class SearchBar extends StatelessWidget {
   void _searchResults(BuildContext context, SearchResult result, LatLng location) async {
     final _searchBloc = BlocProvider.of<SearchBloc>(context);
     final _mapBloc = BlocProvider.of<MapBloc>(context);
-    final _myCurrentLocationBloc = BlocProvider.of<MyCurrentLocationBloc>(context);
     final trafficService = new TrafficService();
 
     if(result.canceled) return;

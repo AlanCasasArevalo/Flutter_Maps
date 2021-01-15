@@ -4,6 +4,8 @@ class Constants {
   static String gpsAccessPageRouteName = 'gpsAccessPageRouteName';
   static String polylineMyRouteName = 'polylineMyRouteName';
   static String polylineRouteDestinationName = 'polylineRouteDestinationName';
+  static String markerRouteDestination = 'markerRouteDestination';
+  static String markerRouteStart = 'markerRouteStart';
   static String searchBarPlaceholder = '¿Donde quieres ir?';
   static String searchBarPlaceholderEditing = 'Buscar destino .....';
   static String searchBarPinTitle = 'Colocar ubicación manualmente';
