@@ -113,12 +113,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     currentPolylines[Constants.polylineRouteDestinationName] = this._routeDestination;
 
     // Initial marker
-    final icon = await getImageAssetMarker();
+    final initialIcon = await getImageAssetMarker();
+    final destinationIcon = await getImageAssetMarkerFromURL();
 
     // Markers
     final duration = (event.duration / 60).floor();
     final startMarker = new Marker(
-      icon: icon,
+      icon: initialIcon,
       markerId: MarkerId(Constants.markerRouteStart),
       position: event.coordinates[0],
       infoWindow: InfoWindow(
@@ -133,6 +134,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final distanceRounded = (kilometers * 100).floor().toDouble();
     final distance = distanceRounded / 100;
     final endMarker = new Marker(
+      anchor: Offset(0.5, 0.9),
+      icon: destinationIcon,
       markerId: MarkerId(Constants.markerRouteDestination),
       position: event.coordinates.last,
       infoWindow: InfoWindow(
