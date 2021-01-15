@@ -114,13 +114,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     // Markers
     final startMarker = new Marker(
       markerId: MarkerId(Constants.markerRouteStart),
-      // La primera coordenada es la posicion en la que va a iniciar la ruta
-      position: event.coordinates[0]
+      position: event.coordinates[0],
+      infoWindow: InfoWindow(
+        onTap: (){},
+        title: 'Donde estoy',
+        snippet: 'Desde donde quiero movermeeeee',
+        anchor: Offset(1.0, 1.0)
+      )
     );
 
     final endMarker = new Marker(
       markerId: MarkerId(Constants.markerRouteDestination),
-      // La primera coordenada es la posicion en la que va a iniciar la ruta
       position: event.coordinates.last
     );
 
