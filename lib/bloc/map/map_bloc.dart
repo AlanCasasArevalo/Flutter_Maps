@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:Flutter_Maps/common/constants.dart';
+import 'package:Flutter_Maps/helpers/helpers.dart';
 import 'package:Flutter_Maps/themes/uber_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -111,9 +112,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final currentPolylines = state.polylines;
     currentPolylines[Constants.polylineRouteDestinationName] = this._routeDestination;
 
+    // Initial marker
+    final icon = await getImageAssetMarker();
+
     // Markers
     final duration = (event.duration / 60).floor();
     final startMarker = new Marker(
+      icon: icon,
       markerId: MarkerId(Constants.markerRouteStart),
       position: event.coordinates[0],
       infoWindow: InfoWindow(
